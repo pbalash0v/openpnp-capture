@@ -59,15 +59,19 @@ else(CMAKE_BUILD_TYPE MATCHES Release)
 endif(CMAKE_BUILD_TYPE MATCHES Release)
 
 
-# add include directory 
-include_directories(include)
-
 # create our capture library
-add_library(openpnp-capture SHARED common/libmain.cpp
-                                   common/context.cpp
-                                   common/logging.cpp
-                                   common/stream.cpp)
+add_library(openpnp-capture SHARED)
+target_sources(openpnp-capture PRIVATE
+    common/libmain.cpp
+    common/context.cpp
+    common/logging.cpp
+    common/stream.cpp)
 
+# add include directory
+target_include_directories(openpnp-capture PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
 # define common properties
 set_target_properties(openpnp-capture PROPERTIES
                       VERSION ${OPENPNP_CAPTURE_LIB_VERSION}
