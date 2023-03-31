@@ -15,6 +15,10 @@ project (openpnp-capture)
 set(OPENPNP_CAPTURE_LIB_VERSION "0.0.24" CACHE STRING "openpnp-capture library version")
 set(OPENPNP_CAPTURE_LIB_SOVERSION "0.0.24" CACHE STRING "openpnp-capture library soversion")
 
+if (CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
+	set(OPENPNP_IS_NOT_SUBPROJECT TRUE)
+endif()
+
 # make sure the libjpegturbo is compiled with the
 # position independent flag -fPIC
 IF (UNIX)
@@ -88,9 +92,10 @@ IF (WIN32)
                                            win/platformstream.cpp)
     target_link_libraries(openpnp-capture strmiids)
 
-    # add windows-specific test application
-    add_subdirectory(win/tests)
-
+    if( OPENPNP_IS_NOT_SUBPROJECT )
+        # add windows-specific test application
+        add_subdirectory(win/tests)
+    endif()
 ELSEIF(APPLE)
     # set the platform identification string
     add_definitions(-D__PLATFORM__="OSX ${COMPILERBITS}")
@@ -109,9 +114,10 @@ ELSEIF(APPLE)
         "-framework IOKit"
         )
 
-    # add mac specific test application
-    add_subdirectory(mac/tests)
-
+    if( OPENPNP_IS_NOT_SUBPROJECT )
+        # add mac specific test application
+        add_subdirectory(mac/tests)
+    endif()
 ELSEIF(UNIX)
     # install path resolving
     include(GNUInstallDirs)
@@ -151,8 +157,10 @@ ELSEIF(UNIX)
         target_link_libraries(openpnp-capture PRIVATE ${TurboJPEG_LIBRARIES})
     endif()
 
-    # add linux-specific test application
-    add_subdirectory(linux/tests)
+    if( OPENPNP_IS_NOT_SUBPROJECT )
+        # add linux-specific test application
+        add_subdirectory(linux/tests)
+    endif()
 
     # install lib and headers
     install(FILES include/openpnp-capture.h
