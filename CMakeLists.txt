@@ -12,8 +12,8 @@
 
 cmake_minimum_required(VERSION 3.1)
 project (openpnp-capture)
-set(OPENPNP_CAPTURE_LIB_VERSION "0.0.24" CACHE STRING "openpnp-capture library version")
-set(OPENPNP_CAPTURE_LIB_SOVERSION "0.0.24" CACHE STRING "openpnp-capture library soversion")
+set(OPENPNP_CAPTURE_LIB_VERSION "0.0.26" CACHE STRING "openpnp-capture library version")
+set(OPENPNP_CAPTURE_LIB_SOVERSION "0" CACHE STRING "openpnp-capture library soversion")
 
 if (CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
 	set(OPENPNP_IS_NOT_SUBPROJECT TRUE)
